@@ -60,6 +60,17 @@ func (c *UserController) PostRegister() mvc.Result {
 	//	username  = c.Ctx.FormValue("username")
 	//	password  = c.Ctx.FormValue("password")
 	//)
+	//var h_token = c.Ctx.GetHeader("token")
+	var c_device = c.Ctx.GetHeader("device")
+	if(c_device == ""){
+		var msg ApiMsg
+		msg.Code = "300"
+		msg.Message = "缺少device信息"
+		msg.ResponseData = nil
+		return mvc.Response{
+			Object: msg,
+		}
+	}
 	var u datamodels.User
 
 	if err := c.Ctx.ReadJSON(&u); err != nil {
@@ -71,15 +82,25 @@ func (c *UserController) PostRegister() mvc.Result {
 	}
 
 	// create the new user, the password will be hashed by the service.
-	u, err := c.Service.Create(u.Password, datamodels.User{
+	u, err := c.Service.Create(u.Password, u)
+
+	var reUser datamodels.User
+	reUser = datamodels.User{
 		Username:  u.Username,
-		Firstname: u.Firstname,
-	})
+		Token: u.Token,
+		ID:u.ID,
+	}
 
 	// set the user's id to this session even if err != nil,
 	// the zero id doesn't matters because .getCurrentUserID() checks for that.
 	// If err != nil then it will be shown, see below on mvc.Response.Err: err.
 	c.Session.Set(userIDKey, u.ID)
+
+	//build response Api Msg
+	var msg ApiMsg
+	msg.Code = "200"
+	msg.Message = "创建账号成功"
+	msg.ResponseData = reUser
 
 	return mvc.Response{
 		// if not nil then this error will be shown instead.
@@ -88,7 +109,7 @@ func (c *UserController) PostRegister() mvc.Result {
 		//Path: "/user/me",
 
 		//response Json
-		Object: u,
+		Object: msg,
 		// When redirecting from POST to GET request you -should- use this HTTP status code,
 		// however there're some (complicated) alternatives if you
 		// search online or even the HTTP RFC.
@@ -99,29 +120,46 @@ func (c *UserController) PostRegister() mvc.Result {
 
 }
 
-
-
-
-
-// PostLogin handles POST: http://localhost:8080/user/register.
+// PostLogin handles POST: http://localhost:8080/user/login.
 func (c *UserController) PostLogin() mvc.Result {
-	var (
-		username = c.Ctx.FormValue("username")
-		password = c.Ctx.FormValue("password")
-	)
+	var u datamodels.User
 
-	u, found := c.Service.GetByUsernameAndPassword(username, password)
+	if err := c.Ctx.ReadJSON(&u);
+	err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+
+	u, found := c.Service.GetByUsernameAndPassword(u.Username, u.Password)
 
 	if !found {
+		var msg ApiMsg
+		msg.Code = "200"
+		msg.Message = "账号不存在或密码错误"
+		msg.ResponseData = nil
 		return mvc.Response{
-			Path: "/user/register",
+			Object: msg,
 		}
 	}
 
 	c.Session.Set(userIDKey, u.ID)
 
+	var reUser datamodels.User
+	reUser = datamodels.User{
+		Username:  u.Username,
+		Token: u.Token,
+		ID:u.ID,
+	}
+	var msg ApiMsg
+	msg.Code = "200"
+	msg.Message = "用户登录成功"
+	msg.ResponseData = reUser
+
 	return mvc.Response{
-		Path: "/user/me",
+		Object: msg,
 	}
 }
 

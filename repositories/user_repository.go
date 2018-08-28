@@ -154,8 +154,8 @@ func (r *userMemoryRepository) InsertOrUpdate(user datamodels.User) (datamodels.
 		current.Username = user.Username
 	}
 
-	if user.Firstname != "" {
-		current.Firstname = user.Firstname
+	if user.Token != "" {
+		current.Token = user.Token
 	}
 
 	// map-specific thing

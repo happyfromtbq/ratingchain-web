@@ -68,7 +68,7 @@ func (c *UserController) GetRegister() mvc.Result {
 func (c *UserController) PostRegister() mvc.Result {
 	// get firstname, username and password from the form.
 	var (
-		firstname = c.Ctx.FormValue("firstname")
+		//firstname = c.Ctx.FormValue("firstname")
 		username  = c.Ctx.FormValue("username")
 		password  = c.Ctx.FormValue("password")
 	)
@@ -76,7 +76,7 @@ func (c *UserController) PostRegister() mvc.Result {
 	// create the new user, the password will be hashed by the service.
 	u, err := c.Service.Create(password, datamodels.User{
 		Username:  username,
-		Firstname: firstname,
+		Password: password,
 	})
 
 	// set the user's id to this session even if err != nil,

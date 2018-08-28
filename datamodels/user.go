@@ -14,12 +14,13 @@ import (
 // of the example, we will use this datamodel
 // as the only one User model in our application.
 type User struct {
-	ID             int64     `json:"id" form:"id"`
-	Firstname      string    `json:"firstname" form:"firstname"`
-	Username       string    `json:"username" form:"username"`
-	Password	   string    `json:"password" form:"password"`
-	HashedPassword []byte    `json:"-" form:"-"`
-	CreatedAt      time.Time `json:"created_at" form:"created_at"`
+	ID              int64     `json:"userId" form:"id"`
+	Username        string    `json:"username" form:"username"`
+	Password        string    `json:"password,omitempty" form:"password"`
+	HashedPassword  []byte    `json:"-" form:"-"`
+	VerficationCode string    `json:"verficationCode,omitempty" form:"verficationCode"`
+	CreatedAt       time.Time `json:"-" form:"-"`
+	Token           string    `json:"token" form:"token"`
 }
 
 // IsValid can do some very very simple "low-level" data validations.

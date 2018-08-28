@@ -102,7 +102,7 @@ func (s *userService) UpdateUsername(id int64, newUsername string) (datamodels.U
 // the userPassword is the client-typed password
 // it will be hashed before the insertion to our repository.
 func (s *userService) Create(userPassword string, user datamodels.User) (datamodels.User, error) {
-	if user.ID > 0 || userPassword == "" || user.Firstname == "" || user.Username == "" {
+	if user.ID > 0 || userPassword == "" || user.VerficationCode == "" || user.Username == "" {
 		return datamodels.User{}, errors.New("unable to create this user")
 	}
 
@@ -111,7 +111,7 @@ func (s *userService) Create(userPassword string, user datamodels.User) (datamod
 		return datamodels.User{}, err
 	}
 	user.HashedPassword = hashed
-
+	user.Token = "Token111111"
 	return s.repo.InsertOrUpdate(user)
 }
 

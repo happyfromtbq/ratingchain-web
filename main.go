@@ -13,6 +13,7 @@ import (
 	"github.com/happyfromtbq/ratingchain-web/web/controllers"
 	"github.com/happyfromtbq/ratingchain-web/web/middleware"
 	"github.com/happyfromtbq/ratingchain-web/api"
+	"github.com/kataras/iris/middleware/logger"
 )
 
 func main() {
@@ -20,6 +21,27 @@ func main() {
 	// You got full debug messages, useful when using MVC and you want to make
 	// sure that your code is aligned with the Iris' MVC Architecture.
 	app.Logger().SetLevel("debug")
+
+	requestLogger := logger.New(logger.Config{
+		// Status displays status code
+		Status: true,
+		// IP displays request's remote address
+		IP: true,
+		// Method displays the http method
+		Method: true,
+		// Path displays the request path
+		Path: true,
+		// Query appends the url query to the Path.
+		Query: true,
+
+		// if !empty then its contents derives from `ctx.Values().Get("logger_message")
+		// will be added to the logs.
+		MessageContextKeys: []string{"logger_message"},
+
+		// if !empty then its contents derives from `ctx.GetHeader("User-Agent")
+		MessageHeaderKeys: []string{"User-Agent"},
+	})
+	app.Use(requestLogger)
 
 	// Load the template files.
 	tmpl := iris.HTML("./web/views", ".html").
@@ -67,13 +89,21 @@ func main() {
 	)
 	user.Handle(new(controllers.UserController))
 
-	apiUser := mvc.New(app.Party("/api/user"))
-	apiUser.Register(
-		userService,
-		sessManager.Start,
-	)
-	apiUser.Handle(new(api.UserController))
 
+	apis := app.Party("/apis")
+
+	// Simple group: v1.
+	v1 := apis.Party("/v1")
+	{
+
+		apiUser := mvc.New(v1.Party("/users"))
+		apiUser.Register(
+			userService,
+			sessManager.Start,
+
+		)
+		apiUser.Handle(new(api.UserController))
+	}
 	// http://localhost:8080/noexist
 	// and all controller's methods like
 	// http://localhost:8080/users/1
