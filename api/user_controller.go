@@ -163,6 +163,49 @@ func (c *UserController) PostLogin() mvc.Result {
 	}
 }
 
+// PostLogin handles POST: /logout.
+func (c *UserController) PostLogout() mvc.Result {
+	var token string = c.Ctx.FormValue("token")
+	if(token == ""){
+		var msg ApiMsg
+		msg.Code = "200"
+		msg.Message = "token不存在"
+		msg.ResponseData = nil
+		return mvc.Response{
+		Object: msg,
+		}
+	}
+	if c.isLoggedIn() {
+		c.logout()
+	}
+	var msg ApiMsg
+	msg.Code = "200"
+	msg.Message = "用户注销登录成功"
+
+	return mvc.Response{
+		Object: msg,
+	}
+}
+
+func (c *UserController) PostChangePassword() mvc.Result {
+	var u datamodels.User
+	if err := c.Ctx.ReadJSON(&u);
+	err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+	var msg ApiMsg
+	msg.Code = "200"
+	msg.Message = "用户修改密码成功"
+
+	return mvc.Response{
+		Object: msg,
+	}
+}
+
 // GetMe handles GET: http://localhost:8080/user/me.
 func (c *UserController) GetMe() mvc.Result {
 	if !c.isLoggedIn() {
