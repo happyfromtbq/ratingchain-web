@@ -42,3 +42,23 @@ func ValidatePassword(userPassword string, hashed []byte) (bool, error) {
 	//}
 	return true, nil
 }
+
+type Credit struct {
+	CreditCode string `json:"creditCode"`
+}
+
+type Remain struct {
+	RemainCount int `json:"remainCount"`
+}
+type SimpleUser struct {
+	UserId              int64     `json:"userId" form:"userId"`
+}
+
+type UserInfo struct{
+	UserId int64 `json:"userId"`
+	Username string `json:"username"`
+	Level int `json:"level"`
+	Credit float32 `json:"credit"`
+	Tags []string `json:"tags"`
+	Project int `json:"project"`
+}

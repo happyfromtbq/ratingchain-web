@@ -136,10 +136,8 @@ func (c *UserController) PostLogin() mvc.Result {
 	u, found := c.Service.GetByUsernameAndPassword(u.Username, u.Password)
 
 	if !found {
-		var msg ApiMsg
-		msg.Code = "200"
+		var msg  = FailApiMsg
 		msg.Message = "账号不存在或密码错误"
-		msg.ResponseData = nil
 		return mvc.Response{
 			Object: msg,
 		}
@@ -153,9 +151,7 @@ func (c *UserController) PostLogin() mvc.Result {
 		Token: u.Token,
 		ID:u.ID,
 	}
-	var msg ApiMsg
-	msg.Code = "200"
-	msg.Message = "用户登录成功"
+	var msg ApiMsg = SuccessApiMsg
 	msg.ResponseData = reUser
 
 	return mvc.Response{
@@ -178,12 +174,9 @@ func (c *UserController) PostLogout() mvc.Result {
 	if c.isLoggedIn() {
 		c.logout()
 	}
-	var msg ApiMsg
-	msg.Code = "200"
-	msg.Message = "用户注销登录成功"
 
 	return mvc.Response{
-		Object: msg,
+		Object: SuccessApiMsg,
 	}
 }
 
@@ -197,16 +190,95 @@ func (c *UserController) PostChangePassword() mvc.Result {
 			Err: err,
 		}
 	}
-	var msg ApiMsg
-	msg.Code = "200"
-	msg.Message = "用户修改密码成功"
 
 	return mvc.Response{
-		Object: msg,
+		Object: SuccessApiMsg,
 	}
 }
 
-// GetMe handles GET: http://localhost:8080/user/me.
+type Invite struct {
+	InviteCode string `json:"inviteCode"`
+}
+
+func (c *UserController) PostBindreferrer() mvc.Result {
+	var i Invite
+	if err := c.Ctx.ReadJSON(&i);
+		err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+	if(i.InviteCode  == ""){
+		return mvc.Response{
+			Object:FailApiMsg,
+		}
+	}
+
+	return mvc.Response{
+		Object: SuccessApiMsg,
+	}
+}
+
+
+//产生信誉码
+func (c *UserController) PostCreatecreditcode() mvc.Result {
+	var apiMsg = SuccessApiMsg
+	var Credit = datamodels.Credit{"24erggF"}
+	apiMsg.ResponseData = Credit
+	return mvc.Response{
+		Object: apiMsg,
+	}
+}
+
+//getcreditcodechance
+//获取产生信誉码的机会
+
+func (c *UserController) PostGetcreditcodechance() mvc.Result {
+	var apiMsg = SuccessApiMsg
+	var Remain = datamodels.Remain{3}
+	apiMsg.ResponseData = Remain
+	return mvc.Response{
+		Object: apiMsg,
+	}
+}
+
+//getUserInfo
+func (c *UserController) PostGetuserinfo() mvc.Result {
+	var su datamodels.SimpleUser
+	var u datamodels.User
+	if err := c.Ctx.ReadJSON(&su);
+		err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+
+
+	u, found := c.Service.GetByID(su.UserId)
+
+	if !found {
+
+	}
+
+	var apiMsg = SuccessApiMsg
+	var userInfo = datamodels.UserInfo{
+		UserId:u.ID,
+		Username:u.Username,
+		Level:3,
+		Credit:4.5,
+		Tags:[]string{"架构","安全","稳定"},
+		Project:12,
+	}
+	apiMsg.ResponseData = userInfo
+	return mvc.Response{
+		Object: apiMsg,
+	}
+}
+
 func (c *UserController) GetMe() mvc.Result {
 	if !c.isLoggedIn() {
 		// if it's not logged in then redirect user to the login page.
