@@ -103,6 +103,13 @@ func main() {
 
 		)
 		apiUser.Handle(new(api.UserController))
+
+		apiRating := mvc.New(v1.Party("/rating"))
+		apiRating.Register(
+			userService,
+			sessManager.Start,
+		)
+		apiRating.Handle(new(api.UserController))
 	}
 	// http://localhost:8080/noexist
 	// and all controller's methods like

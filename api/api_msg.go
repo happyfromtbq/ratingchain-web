@@ -16,3 +16,8 @@ var FailApiMsg = ApiMsg{
 	Message:"操作失败",
 }
 
+var NoLoginApiMsg = ApiMsg{
+	Code:"-2",
+	Message:"未登录",
+}
+
