@@ -167,3 +167,55 @@ func (c *RatingController) PostGetcategoryraters() mvc.Result{
 	}
 }
 
+//关注评级者
+func (c *RatingController) PostFocusrater() mvc.Result{
+	var m   datamodels.FocusRaterId
+	if err := c.Ctx.ReadJSON(&m);
+		err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+	return mvc.Response{
+		Object:SuccessApiMsg,
+	}
+}
+
+//获取关注的评级者
+func (c *RatingController) PostGetfocusraters() mvc.Result{
+	var m datamodels.PageUser
+	if err := c.Ctx.ReadJSON(&m);
+		err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+	//todo 待完成
+	var apiMsg = SuccessApiMsg
+	var userInfo1 = datamodels.UserInfo{
+		UserId:11,
+		Username:"ASA",
+		Level:3,
+		Credit:4.5,
+		Tags:[]string{"架构","安全","稳定"},
+		Project:12,
+	}
+	var userInfo2= datamodels.UserInfo{
+		UserId:12,
+		Username:"bbb",
+		Level:3,
+		Credit:4.5,
+		Tags:[]string{"架构","安全","稳定"},
+		Project:12,
+	}
+
+	apiMsg.ResponseData = datamodels.List{[]datamodels.UserInfo{userInfo1,userInfo2}}
+	return mvc.Response{
+		Object: apiMsg,
+	}
+}
+

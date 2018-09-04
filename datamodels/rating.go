@@ -48,3 +48,8 @@ type PageCategory struct {
 type List struct {
 	List interface{} `json:"list"`
 }
+
+type FocusRaterId struct {
+	RaterId int64 `json:"raterId"`
+	Focus int `json:"focus"` //0:取消关注 	1：关注
+}
