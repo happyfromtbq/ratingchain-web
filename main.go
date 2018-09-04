@@ -109,7 +109,7 @@ func main() {
 			userService,
 			sessManager.Start,
 		)
-		apiRating.Handle(new(api.UserController))
+		apiRating.Handle(new(api.RatingController))
 	}
 	// http://localhost:8080/noexist
 	// and all controller's methods like
