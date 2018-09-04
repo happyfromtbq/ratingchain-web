@@ -63,10 +63,8 @@ func (c *UserController) PostRegister() mvc.Result {
 	//var h_token = c.Ctx.GetHeader("token")
 	var c_device = c.Ctx.GetHeader("device")
 	if(c_device == ""){
-		var msg ApiMsg
-		msg.Code = "300"
+		var msg ApiMsg = FailApiMsg
 		msg.Message = "缺少device信息"
-		msg.ResponseData = nil
 		return mvc.Response{
 			Object: msg,
 		}
@@ -97,9 +95,7 @@ func (c *UserController) PostRegister() mvc.Result {
 	c.Session.Set(userIDKey, u.ID)
 
 	//build response Api Msg
-	var msg ApiMsg
-	msg.Code = "200"
-	msg.Message = "创建账号成功"
+	var msg ApiMsg = SuccessApiMsg
 	msg.ResponseData = reUser
 
 	return mvc.Response{
@@ -163,12 +159,10 @@ func (c *UserController) PostLogin() mvc.Result {
 func (c *UserController) PostLogout() mvc.Result {
 	var token string = c.Ctx.FormValue("token")
 	if(token == ""){
-		var msg ApiMsg
-		msg.Code = "200"
+		var msg ApiMsg = FailApiMsg
 		msg.Message = "token不存在"
-		msg.ResponseData = nil
 		return mvc.Response{
-		Object: msg,
+			Object: msg,
 		}
 	}
 	if c.isLoggedIn() {
