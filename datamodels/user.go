@@ -20,7 +20,7 @@ type User struct {
 	HashedPassword  []byte    `json:"-" form:"-"`
 	VerificationCode string    `json:"verificationCode,omitempty" form:"verificationCode"`
 	CreatedAt       time.Time `json:"-" form:"-"`
-	Token           string    `json:"token" form:"token"`
+	Token           string    `json:"authToken" form:"authToken"`
 }
 
 // IsValid can do some very very simple "low-level" data validations.
