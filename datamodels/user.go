@@ -18,7 +18,7 @@ type User struct {
 	Username        string    `json:"username" form:"username"`
 	Password        string    `json:"password,omitempty" form:"password"`
 	HashedPassword  []byte    `json:"-" form:"-"`
-	VerficationCode string    `json:"verficationCode,omitempty" form:"verficationCode"`
+	VerificationCode string    `json:"verificationCode,omitempty" form:"verificationCode"`
 	CreatedAt       time.Time `json:"-" form:"-"`
 	Token           string    `json:"token" form:"token"`
 }
