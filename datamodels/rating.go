@@ -53,3 +53,10 @@ type FocusRaterId struct {
 	RaterId int64 `json:"raterId"`
 	Focus int `json:"focus"` //0:取消关注 	1：关注
 }
+
+//检查用户是否可以评级
+type CanRate struct {
+	UserId int64 `json:"userId"`
+	ProjectId int64 `json:"projectId"`
+	CanRate int `json:"canRate"`//1:可以 	0：不可以
+}

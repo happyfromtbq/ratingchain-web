@@ -219,3 +219,24 @@ func (c *RatingController) PostGetfocusraters() mvc.Result{
 	}
 }
 
+//检查用户是否可以评级
+func (c *RatingController) PostCheckrateauthority() mvc.Result{
+	var m datamodels.Project
+	if err := c.Ctx.ReadJSON(&m);
+		err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+
+	var cr = datamodels.CanRate{CanRate:1}
+	var apiMsg = SuccessApiMsg
+	apiMsg.ResponseData = cr
+	return mvc.Response{
+		Object: apiMsg,
+	}
+}
+
+
