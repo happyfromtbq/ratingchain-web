@@ -92,7 +92,7 @@ func (c *ProjectController) PostGetfocusprojects()  mvc.Result{
 }
 
 //获取项目分类
-func (c *RatingController) PostGetprojectcategory() mvc.Result{
+func (c *ProjectController) PostGetprojectcategory() mvc.Result{
 	var apiMsg = SuccessApiMsg
 	apiMsg.ResponseData = datamodels.List{[]string{"架构","安全","内容"}}
 	return mvc.Response{
@@ -101,7 +101,7 @@ func (c *RatingController) PostGetprojectcategory() mvc.Result{
 }
 
 //获取项目分类
-func (c *RatingController) PostGetcategoryprojects() mvc.Result{
+func (c *ProjectController) PostGetcategoryprojects() mvc.Result{
 	var m datamodels.PageCategory
 	if err := c.Ctx.ReadJSON(&m);
 		err != nil {
