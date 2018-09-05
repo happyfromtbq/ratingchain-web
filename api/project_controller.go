@@ -140,7 +140,7 @@ func (c *ProjectController) PostGetcategoryprojects() mvc.Result{
 }
 
 //获取项目的基本信息
-func (c *RatingController) PostGetprojectdetail() mvc.Result{
+func (c *ProjectController) PostGetprojectdetail() mvc.Result{
 	var m datamodels.CanRate
 	if err := c.Ctx.ReadJSON(&m);
 		err != nil {
@@ -169,7 +169,7 @@ func (c *RatingController) PostGetprojectdetail() mvc.Result{
 }
 
 //获取项目的基本信息
-func (c *RatingController) PostGetstatisticsscore() mvc.Result {
+func (c *ProjectController) PostGetstatisticsscore() mvc.Result {
 	var m datamodels.CanRate
 	if err := c.Ctx.ReadJSON(&m);
 		err != nil {
@@ -198,7 +198,7 @@ func (c *RatingController) PostGetstatisticsscore() mvc.Result {
 }
 
 //获取参与项目的评级者
-func (c *RatingController) PostGetprojectraters() mvc.Result {
+func (c *ProjectController) PostGetprojectraters() mvc.Result {
 	var m datamodels.ProjectPage
 	if err := c.Ctx.ReadJSON(&m);
 		err != nil {
@@ -234,7 +234,7 @@ func (c *RatingController) PostGetprojectraters() mvc.Result {
 }
 
 //评级时获取评级指标
-func (c *RatingController) PostGetratedimensions() mvc.Result {
+func (c *ProjectController) PostGetratedimensions() mvc.Result {
 	var v1 = datamodels.ProjectTag{
 		Name:"架构",
 		Value:6.5,
@@ -253,7 +253,7 @@ func (c *RatingController) PostGetratedimensions() mvc.Result {
 }
 
 //提交项目评级
-func (c *RatingController) PostSubmitratingscores() mvc.Result {
+func (c *ProjectController) PostSubmitratingscores() mvc.Result {
 	var m datamodels.ProjectTagScore
 	if err := c.Ctx.ReadJSON(&m);
 		err != nil {
@@ -269,7 +269,7 @@ func (c *RatingController) PostSubmitratingscores() mvc.Result {
 }
 
 //关注项目
-func (c *RatingController) PostFocusproject() mvc.Result {
+func (c *ProjectController) PostFocusproject() mvc.Result {
 	var m datamodels.ProjectFocus
 	if err := c.Ctx.ReadJSON(&m);
 		err != nil {
