@@ -110,6 +110,13 @@ func main() {
 			sessManager.Start,
 		)
 		apiRating.Handle(new(api.RatingController))
+
+		apiProject := mvc.New(v1.Party("/project"))
+		apiProject.Register(
+			userService,
+			sessManager.Start,
+		)
+		apiProject.Handle(new(api.ProjectController))
 	}
 	// http://localhost:8080/noexist
 	// and all controller's methods like

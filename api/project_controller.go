@@ -196,3 +196,92 @@ func (c *RatingController) PostGetstatisticsscore() mvc.Result {
 		Object: apiMsg,
 	}
 }
+
+//获取参与项目的评级者
+func (c *RatingController) PostGetprojectraters() mvc.Result {
+	var m datamodels.ProjectPage
+	if err := c.Ctx.ReadJSON(&m);
+		err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+
+	var apiMsg = SuccessApiMsg
+	var userInfo1 = datamodels.UserInfo{
+		UserId:11,
+		Username:"ASA",
+		Level:3,
+		Credit:4.5,
+		Tags:[]string{"架构","安全","稳定"},
+		Project:12,
+	}
+	var userInfo2= datamodels.UserInfo{
+		UserId:12,
+		Username:"bbb",
+		Level:3,
+		Credit:4.5,
+		Tags:[]string{"架构","安全","稳定"},
+		Project:12,
+	}
+
+	apiMsg.ResponseData = datamodels.List{[]datamodels.UserInfo{userInfo1,userInfo2}}
+	return mvc.Response{
+		Object: apiMsg,
+	}
+}
+
+//评级时获取评级指标
+func (c *RatingController) PostGetratedimensions() mvc.Result {
+	var v1 = datamodels.ProjectTag{
+		Name:"架构",
+		Value:6.5,
+		Level:1,
+	}
+	var v2 = datamodels.ProjectTag{
+		Name:"安全性",
+		Value:6.5,
+		Level:1,
+	}
+	var apiMsg = SuccessApiMsg
+	apiMsg.ResponseData = datamodels.List{[]datamodels.ProjectTag{v1,v2}}
+	return mvc.Response{
+		Object: apiMsg,
+	}
+}
+
+//提交项目评级
+func (c *RatingController) PostSubmitratingscores() mvc.Result {
+	var m datamodels.ProjectTagScore
+	if err := c.Ctx.ReadJSON(&m);
+		err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+	return mvc.Response{
+		Object: SuccessApiMsg,
+	}
+}
+
+//关注项目
+func (c *RatingController) PostFocusproject() mvc.Result {
+	var m datamodels.ProjectFocus
+	if err := c.Ctx.ReadJSON(&m);
+		err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+	//todo 关注或取消关注项目
+	return mvc.Response{
+		Object: SuccessApiMsg,
+	}
+}
+

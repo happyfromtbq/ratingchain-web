@@ -26,6 +26,18 @@ type ProjectTag struct {
 }
 
 type ProjectTagScore struct {
+	ProjectId int64 `json:"projectId"`
 	TotalScore float64 `json:"totalScore"`
 	Dimensions []ProjectTag `json:"dimensions"`
+}
+
+type ProjectPage struct {
+	ProjectId int64 `json:"projectId"`
+	StartIndex int `json:"startIndex"` //获取数据的起始位置
+	RequestSize int `json:"requestSize"` //获取数据的个数
+}
+
+type ProjectFocus struct {
+	ProjectId int64 `json:"projectId"`
+	Focus int `json:"focus"`
 }
