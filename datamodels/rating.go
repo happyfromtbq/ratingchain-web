@@ -21,9 +21,9 @@ type CreditCode struct {
 }
 
 type ApplyRater struct {
-	step int `json:"step"`
-	codes []string `json:"codes"` //
-	certificates []string `json:"certificates"` //证件照数组
+	Step int `json:"step"`
+	Codes []string `json:"codes"` //
+	Certificates []string `json:"certificates"` //证件照数组
 }
 
 type PageUser struct {
@@ -32,13 +32,6 @@ type PageUser struct {
 	RequestSize int `json:"requestSize"` //获取数据的个数
 }
 
-type Project struct {
-	ProjectId int64 `json:"projectId"`
-	Name string `json:"name"`
-	Logo string `json:"logo"`
-	Token string `json:"token"`
-	Tags []string `json:"tags"`
-}
 type PageCategory struct {
 	Category string `json:"category"`
 	StartIndex int `json:"startIndex"` //获取数据的起始位置
@@ -54,9 +47,3 @@ type FocusRaterId struct {
 	Focus int `json:"focus"` //0:取消关注 	1：关注
 }
 
-//检查用户是否可以评级
-type CanRate struct {
-	UserId int64 `json:"userId"`
-	ProjectId int64 `json:"projectId"`
-	CanRate int `json:"canRate"`//1:可以 	0：不可以
-}

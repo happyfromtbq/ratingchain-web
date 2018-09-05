@@ -103,18 +103,18 @@ func (c *RatingController) PostGetrateprojects()  mvc.Result {
 	}
 
 	var p1 = datamodels.Project{
-		343432,
-		"初链",
-		"www.truechain.pro/logo.png",
-		"TRUE",
-		[]string{"公链", "基础链"},
+		ProjectId:343432,
+		Name:"初链",
+		Logo:"www.truechain.pro/logo.png",
+		Token:"TRUE",
+		Tags:[]string{"公链", "基础链"},
 	}
 	var p2 = datamodels.Project{
-		4545,
-		"以太坊",
-		"www.eth.io/logo.png",
-		"ETH",
-		[]string{"公链", "基础链"},
+		ProjectId:4545,
+		Name:"以太坊",
+		Logo:"www.eth.io/logo.png",
+		Token:"ETH",
+		Tags:[]string{"公链", "基础链"},
 	}
 	var apiMsg = SuccessApiMsg
 	apiMsg.ResponseData = []datamodels.Project{p1,p2}
