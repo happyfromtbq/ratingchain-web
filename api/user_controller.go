@@ -213,6 +213,16 @@ func (c *UserController) PostBindreferrer() mvc.Result {
 	}
 }
 
+//检查是否已绑定推荐人
+func (c *UserController) PostCheckbind() mvc.Result {
+	var r = datamodels.Invite{IsBind:1,InviteCode:"222333"}
+	var apiMsg = SuccessApiMsg
+	apiMsg.ResponseData = r
+	return mvc.Response{
+		Object: apiMsg,
+	}
+}
+
 func (c *UserController) PostCheckinvitecode() mvc.Result {
 	var i datamodels.Invite
 	if err := c.Ctx.ReadJSON(&i);

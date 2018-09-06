@@ -66,4 +66,7 @@ type UserInfo struct{
 type Invite struct {
 	InviteCode string `json:"inviteCode,omitempty"`
 	IsValid int `json:"isValid,omitempty"`
+	IsBind int `json:"isBind,omitempty"`  // 1：已绑定 	0:未绑定
+	UesrId int64 `json:"uesrId,omitempty"`
+	InviteUserId int64 `json:"inviteUserId,omitempty"`
 }

@@ -150,6 +150,10 @@ func (c *ProjectController) PostGetprojectdetail() mvc.Result{
 			Err: err,
 		}
 	}
+	//var fr = datamodels.FocusRaterId{
+	//	RaterId:111,//userId
+	//	Focus:1,
+	//}
 	var p1 = datamodels.Project{
 		ProjectId:343432,
 		Name:"初链",
@@ -160,6 +164,7 @@ func (c *ProjectController) PostGetprojectdetail() mvc.Result{
 		Raters:100,
 		Score:7.5,
 		Rater:90,
+		Focus:1,
 	}
 	var apiMsg = SuccessApiMsg
 	apiMsg.ResponseData = p1

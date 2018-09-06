@@ -10,6 +10,8 @@ type Project struct {
 	Raters int `json:"raters,omitempty"`
 	Score float64 `json:"score,omitempty"`
 	Rater int `json:"rater,omitempty"`
+	//FocusRaterId FocusRaterId `json:"focusRaterId"` //1:被关注 0：未被关注
+	Focus int `json:"focus"` //0:取消关注 	1：关注
 }
 
 //检查用户是否可以评级
