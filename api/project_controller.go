@@ -67,7 +67,7 @@ func (c *ProjectController) PostGetfocusprojects()  mvc.Result{
 	var p1 = datamodels.Project{
 		ProjectId:343432,
 		Name:"初链",
-		Logo:"www.truechain.pro/logo.png",
+		Logo:"http://www.truechain.pro/logo.png",
 		Token:"TRUE",
 		Tags:[]string{"公链", "基础链"},
 		Raters:100,
@@ -77,7 +77,7 @@ func (c *ProjectController) PostGetfocusprojects()  mvc.Result{
 	var p2 = datamodels.Project{
 		ProjectId:4545,
 		Name:"以太坊",
-		Logo:"www.eth.io/logo.png",
+		Logo:"http://www.eth.io/logo.png",
 		Token:"ETH",
 		Tags:[]string{"公链", "基础链"},
 		Raters:500,
@@ -115,7 +115,7 @@ func (c *ProjectController) PostGetcategoryprojects() mvc.Result{
 	var p1 = datamodels.Project{
 		ProjectId:343432,
 		Name:"初链",
-		Logo:"www.truechain.pro/logo.png",
+		Logo:"http://www.truechain.pro/logo.png",
 		Token:"TRUE",
 		Tags:[]string{"公链", "基础链"},
 		Raters:100,
@@ -125,7 +125,7 @@ func (c *ProjectController) PostGetcategoryprojects() mvc.Result{
 	var p2 = datamodels.Project{
 		ProjectId:4545,
 		Name:"以太坊",
-		Logo:"www.eth.io/logo.png",
+		Logo:"http://www.eth.io/logo.png",
 		Token:"ETH",
 		Tags:[]string{"公链", "基础链"},
 		Raters:500,
@@ -153,7 +153,7 @@ func (c *ProjectController) PostGetprojectdetail() mvc.Result{
 	var p1 = datamodels.Project{
 		ProjectId:343432,
 		Name:"初链",
-		Logo:"www.truechain.pro/logo.png",
+		Logo:"http://www.truechain.pro/logo.png",
 		Token:"TRUE",
 		Tags:[]string{"公链", "基础链"},
 		Description:"详细描述很多内容",

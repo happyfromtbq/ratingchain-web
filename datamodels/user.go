@@ -62,3 +62,8 @@ type UserInfo struct{
 	Tags []string `json:"tags"`
 	Project int `json:"project"`
 }
+
+type Invite struct {
+	InviteCode string `json:"inviteCode,omitempty"`
+	IsValid int `json:"isValid,omitempty"`
+}

@@ -174,7 +174,7 @@ func (c *UserController) PostLogout() mvc.Result {
 	}
 }
 
-func (c *UserController) PostChangePassword() mvc.Result {
+func (c *UserController) PostChangepassword() mvc.Result {
 	var u datamodels.User
 	if err := c.Ctx.ReadJSON(&u);
 	err != nil {
@@ -190,12 +190,10 @@ func (c *UserController) PostChangePassword() mvc.Result {
 	}
 }
 
-type Invite struct {
-	InviteCode string `json:"inviteCode"`
-}
+
 
 func (c *UserController) PostBindreferrer() mvc.Result {
-	var i Invite
+	var i datamodels.Invite
 	if err := c.Ctx.ReadJSON(&i);
 		err != nil {
 		c.Ctx.StatusCode(iris.StatusBadRequest)
@@ -215,6 +213,28 @@ func (c *UserController) PostBindreferrer() mvc.Result {
 	}
 }
 
+func (c *UserController) PostCheckinvitecode() mvc.Result {
+	var i datamodels.Invite
+	if err := c.Ctx.ReadJSON(&i);
+		err != nil {
+		c.Ctx.StatusCode(iris.StatusBadRequest)
+		c.Ctx.WriteString(err.Error())
+		return mvc.Response{
+			Err: err,
+		}
+	}
+	if(i.InviteCode  == ""){
+		return mvc.Response{
+			Object:FailApiMsg,
+		}
+	}
+	var r = datamodels.Invite{IsValid:1}
+	var apiMsg = SuccessApiMsg
+	apiMsg.ResponseData = r
+	return mvc.Response{
+		Object: apiMsg,
+	}
+}
 
 //产生信誉码
 func (c *UserController) PostCreatecreditcode() mvc.Result {

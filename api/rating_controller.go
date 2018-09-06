@@ -105,14 +105,14 @@ func (c *RatingController) PostGetrateprojects()  mvc.Result {
 	var p1 = datamodels.Project{
 		ProjectId:343432,
 		Name:"初链",
-		Logo:"www.truechain.pro/logo.png",
+		Logo:"http://www.truechain.pro/logo.png",
 		Token:"TRUE",
 		Tags:[]string{"公链", "基础链"},
 	}
 	var p2 = datamodels.Project{
 		ProjectId:4545,
 		Name:"以太坊",
-		Logo:"www.eth.io/logo.png",
+		Logo:"http://www.eth.io/logo.png",
 		Token:"ETH",
 		Tags:[]string{"公链", "基础链"},
 	}
