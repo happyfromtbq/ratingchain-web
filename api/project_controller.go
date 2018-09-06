@@ -85,7 +85,7 @@ func (c *ProjectController) PostGetfocusprojects()  mvc.Result{
 		Rater:490,
 	}
 	var apiMsg = SuccessApiMsg
-	apiMsg.ResponseData = []datamodels.Project{p1,p2}
+	apiMsg.ResponseData = datamodels.List{[]datamodels.Project{p1,p2}}
 	return mvc.Response{
 		Object: apiMsg,
 	}
@@ -133,7 +133,7 @@ func (c *ProjectController) PostGetcategoryprojects() mvc.Result{
 		Rater:490,
 	}
 	var apiMsg = SuccessApiMsg
-	apiMsg.ResponseData = []datamodels.Project{p1,p2}
+	apiMsg.ResponseData = datamodels.List{[]datamodels.Project{p1,p2}}
 	return mvc.Response{
 		Object: apiMsg,
 	}

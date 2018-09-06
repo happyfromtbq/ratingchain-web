@@ -117,7 +117,7 @@ func (c *RatingController) PostGetrateprojects()  mvc.Result {
 		Tags:[]string{"公链", "基础链"},
 	}
 	var apiMsg = SuccessApiMsg
-	apiMsg.ResponseData = []datamodels.Project{p1,p2}
+	apiMsg.ResponseData = datamodels.List{[]datamodels.Project{p1,p2}}
 	return mvc.Response{
 		Object: apiMsg,
 	}
