@@ -26,3 +26,12 @@ func InitDb() {
 	//db := connection.NewDB()
 	//return db
 }
+
+// insertGetId : insert data and get id
+func InsertGetId(dba *gorose.Database) (int64, error) {
+	_, err := dba.Insert()
+	if err != nil {
+		return 0, err
+	}
+	return dba.LastInsertId, nil
+}

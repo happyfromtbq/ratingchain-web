@@ -110,60 +110,7 @@ func (r *userMemoryRepository) SelectMany(query Query, limit int) (results []dat
 //
 // Returns the new user and an error if any.
 func (r *userMemoryRepository) InsertOrUpdate(user datamodels.User) (datamodels.User, error) {
-	//id := user.ID
-	//
-	//if id == 0 { // Create new action
-	//	var lastID int64
-	//	// find the biggest ID in order to not have duplications
-	//	// in productions apps you can use a third-party
-	//	// library to generate a UUID as string.
-	//	r.mu.RLock()
-	//	for _, item := range r.source {
-	//		if item.ID > lastID {
-	//			lastID = item.ID
-	//		}
-	//	}
-	//	r.mu.RUnlock()
-	//
-	//	id = lastID + 1
-	//	user.ID = id
-	//
-	//	// map-specific thing
-	//	r.mu.Lock()
-	//	r.source[id] = user
-	//	r.mu.Unlock()
-	//
-	//	return user, nil
-	//}
-	//
-	//// Update action based on the user.ID,
-	//// here we will allow updating the poster and genre if not empty.
-	//// Alternatively we could do pure replace instead:
-	//// r.source[id] = user
-	//// and comment the code below;
-	//current, exists := r.Select(func(m datamodels.User) bool {
-	//	return m.ID == id
-	//})
-	//
-	//if !exists { // ID is not a real one, return an error.
-	//	return datamodels.User{}, errors.New("failed to update a nonexistent user")
-	//}
-	//
-	//// or comment these and r.source[id] = user for pure replace
-	//if user.Username != "" {
-	//	current.Username = user.Username
-	//}
-	//
-	//if user.Token != "" {
-	//	current.Token = user.Token
-	//}
-	//
-	//// map-specific thing
-	//r.mu.Lock()
-	//r.source[id] = current
-	//r.mu.Unlock()
-	//
-	//return user, nil
+
 	InitDb()
 	data := map[string]interface{}{
 		"username":  user.Username,
@@ -172,13 +119,18 @@ func (r *userMemoryRepository) InsertOrUpdate(user datamodels.User) (datamodels.
 	}
 	defer conn.Close()
 	db := conn.NewDB()
-	res, err := db.Table("t_user").Data(data).Insert()
+	db2 :=db.Table("t_user").Data(data);
+	res, err := InsertGetId(db2);
+	//res, err := db.Table("t_user").Data(data).InsertGetId() //int64 to  int
 	fmt.Println(res)
 	if err != nil {
 		fmt.Println(err)
+		var user2 datamodels.User
+		return user2,nil
+	}else{
+		user.ID = res
+		return user,nil
 	}
-
-	return user,nil
 }
 
 func (r *userMemoryRepository) Delete(query Query, limit int) bool {
